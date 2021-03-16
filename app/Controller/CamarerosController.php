@@ -13,7 +13,15 @@ class CamarerosController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator');
+	public $components = array('RequestHandler', 'Session');
+	public $helpers = array('Html','Form','Time','Js');
+
+	public $paginate = array(
+		'limit' => 3,
+		'order' => array(
+			'Camarero.id' => 'asc'
+		)
+	);
 
 /**
  * index method
@@ -22,7 +30,11 @@ class CamarerosController extends AppController {
  */
 	public function index() {
 		$this->Camarero->recursive = 0;
-		$this->set('camareros', $this->Paginator->paginate());
+
+		$this->paginate['Camarero']['limit'] = 3;
+		$this->paginate['Camarero']['order'] = array('Camarero.id' => 'asc');
+		// $this->paginate['Camarero']['conditions'] = array('Camarero.status' => 1);
+		$this->set('camareros', $this->paginate());
 	}
 
 /**
@@ -49,10 +61,10 @@ class CamarerosController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Camarero->create();
 			if ($this->Camarero->save($this->request->data)) {
-				$this->Flash->success(__('The camarero has been saved.'));
+				$this->Flash->success('The camarero has been saved.');
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Flash->error(__('The camarero could not be saved. Please, try again.'));
+				$this->Flash->set(('The camarero could not be saved. Please, try again.'));
 			}
 		}
 	}
