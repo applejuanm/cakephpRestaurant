@@ -52,7 +52,7 @@
 					array('class' => 'btn btn-sm btn-info')); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $camarero['Camarero']['id']),
 				array('class' => 'btn btn-sm btn-default')); ?>
-			<button class = 'btn btn-sm btn-danger' style="color:azure">
+			<button class ='btn btn-sm btn-danger'>
 			<?php echo $this->Form->postLink('Delete', array('action' => 'delete', $camarero['Camarero']
                 ['id']), array('confirm' => 'Quieres eliminar a ' . $camarero['Camarero']['nombre'] . ' ?')); ?></button>
 		</td>
