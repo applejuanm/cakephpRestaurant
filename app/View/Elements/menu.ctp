@@ -9,11 +9,14 @@
 	                <span class="icon-bar"></span>
 	                <span class="icon-bar"></span>
 	            </button>
-	            <a class="navbar-brand" href="#">Restaurante</a>
+
+	           <?php echo $this->Html->link('Restaurante', array('controller' => 'pages',
+			   		'action' => 'home'), array('class' => 'navbar-brand')) ?>
+
 	        </div>
 	        <div class="navbar-collapse collapse">
 	            <ul class="nav navbar-nav">
-	        
+	
                     <li class="dropdown">
 	                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Camareros 
                         <span class="caret"></span></a>
@@ -25,6 +28,34 @@
 	                    </ul>
 	                </li>
 
+
+
+					<li class="dropdown">
+	                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cocineros <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+	                        <li><?php echo $this->Html->link('Lista Cocineros', array('controller' => 'cocineros',
+                                'action' => 'index'));?></li>
+	                         <li><?php echo $this->Html->link('Nuevo Cocinero', array('controller' => 'cocineros',
+                                'action' => 'add'));?></li>
+	                    </ul>
+	                </li>
+
+
+					<li class="dropdown">
+	                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Platillos <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+	                        <li><?php echo $this->Html->link('Lista Platillos', array('controller' => 'platillos',
+                                'action' => 'index'));?></li>
+	                         <li><?php echo $this->Html->link('Nuevo Platillos', array('controller' => 'platillos',
+                                'action' => 'add'));?></li>
+								<li class="divider"></li>
+									<li><?php echo $this->Html->link('Lista Categorias', array('controller' => 'categoria_platillos',
+                                'action' => 'index'));?></li>
+	                         <li><?php echo $this->Html->link('Nueva Categoria', array('controller' => 'categoria_platillos',
+                                'action' => 'add'));?></li>
+	                    </ul>
+	                </li>
+
 	                <li class="dropdown">
 	                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mesas <span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
@@ -32,8 +63,12 @@
                                 'action' => 'index'));?></li>
 	                         <li><?php echo $this->Html->link('Nueva Mesa', array('controller' => 'mesas',
                                 'action' => 'add'));?></li>
+								
+							
 	                    </ul>
 	                </li>
+
+
 					<li><a href="#about">About</a></li>
 	                <li><a href="#contact">Contact</a></li>
 	            </ul>
