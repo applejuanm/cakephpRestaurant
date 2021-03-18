@@ -71,6 +71,34 @@ class Platillo extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+		'foto' => array(
+            'uploadError' => array(
+				'rule' => 'uploadError',
+				'message' => 'Algo anda mal, intente nuevamente',
+				'on' => 'create'
+			),
+	        'isUnderPhpSizeLimit' => array(
+	    		'rule' => 'isUnderPhpSizeLimit',
+	        	'message' => 'Archivo excede el límite de tamaño de archivo de subida'
+	        ),
+		    'isValidMimeType' => array(
+	    		'rule' => array('isValidMimeType', array('image/jpeg', 'image/png'), false),
+        		'message' => 'La imagen no es jpg ni png',
+	    	),
+		    'isBelowMaxSize' => array(
+	    		'rule' => array('isBelowMaxSize', 1048576),
+        		'message' => 'El tamaño de imagen es demasiado grande'
+	    	),
+		    'isValidExtension' => array(
+	    		'rule' => array('isValidExtension', array('jpg', 'png'), false),
+        		'message' => 'La imagen no tiene la extension jpg o png'
+	    	),
+		    'checkUniqueName' => array(
+                'rule' => array('checkUniqueName'),
+                'message' => 'La imagen ya se encuentra registrada',
+                'on' => 'update'
+            ),		
+		),
 		'categoria_platillo_id' => array(
 			'notBlank' => array(
 				'rule' => array('notBlank'),
@@ -121,4 +149,24 @@ class Platillo extends AppModel {
 		)
 	);
 
+	//verificar si la imagen ya esta dentro del servidor, sirve para eliminar la anterior foto y poner
+	//la de entrada, nos va a recibir un data
+	function checkUniqueName($data)
+	{
+		//consulta que busca el primer registro de nuestro primer campo foto, el campo foto tiene que ser igual
+		//al campo foto que yo estoy subiendo en este momento
+	     $isUnique = $this->find('first', array('fields' => array('Platillo.foto'), 'conditions' => array('Platillo.foto' => $data['foto'])));
+		//si no esta vacio me rotorna falso
+	    if(!empty($isUnique))
+	    {
+	        return false;
+	    }
+	    else
+	    {	//si activa la validacion si hay una foto
+	        return true;
+	    }
+	}
+
 }
+
+
