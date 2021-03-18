@@ -13,11 +13,18 @@ class PlatillosController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator','Flash', 'RequestHandler');
+	public $components = array('Paginator','Session','Flash', 'RequestHandler');
 	//usamos helpers para importar etiquetas helpers
   	//son ayudantes para hacer formularios,Javascript
  	 //Time es para formatos de fechas
     public $helpers = array('Html', 'Form', 'Time', 'Js');
+
+	public $paginate = array(
+		'limit' => 3,
+		'order' => array(
+			'Platillo.id' => 'asc'
+		)
+	);
 
 /**
  * index method
@@ -26,7 +33,9 @@ class PlatillosController extends AppController {
  */
 	public function index() {
 		$this->Platillo->recursive = 0;
-		$this->set('platillos', $this->Paginator->paginate());
+		$this->paginate['Platillo']['limit'] = 1;
+		$this->paginate['Platillo']['order'] = array('Platillo.id' => 'asc');
+		$this->set('platillos', $this->paginate());
 	}
 
 /**

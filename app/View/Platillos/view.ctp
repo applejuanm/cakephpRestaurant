@@ -4,17 +4,18 @@
 
 <div class="row">
 
+	<!---Mostramos la imagen del platillo, imagen vga que sale mas grande para verlo-->
 	<div class="col col-sm-7">
 			<?php echo $this->Html->image('../files/platillo/foto/' . $platillo['Platillo']['foto_dir'] . '/' . 'vga_' .$platillo['Platillo']['foto'], array('class' => 'img-thumbnail img-responsive')); ?>
 	</div>
 
 	<div class="col col-sm-5">
-
+	
 		<strong><?php echo $platillo['Platillo']['nombre']; ?></strong>
 
 		<br />
 		<br />
-
+		<!---Mostramos las caracteristicas del platillo -->
 		$ <span id="productprice"><?php echo h($platillo['Platillo']['precio']); ?></span>
 
 		<br />
@@ -43,6 +44,7 @@
 		Categoría: <?php echo $this->Html->link($platillo['CategoriaPlatillo']['categoria'], array('controller' => 'categoria_platillos', 'action' => 'view', $platillo['CategoriaPlatillo']['id'])); ?>
 		<br />
 		<br />
+		<!---Mostramos la botonera del platillo, añadir,editar y listar-->
 		<div class="btn-group">
 		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 		    <?php echo __('Actions'); ?> <span class="caret"></span>
