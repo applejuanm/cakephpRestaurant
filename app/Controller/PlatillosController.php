@@ -13,7 +13,11 @@ class PlatillosController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator');
+	public $components = array('Paginator','Flash', 'RequestHandler');
+	//usamos helpers para importar etiquetas helpers
+  	//son ayudantes para hacer formularios,Javascript
+ 	 //Time es para formatos de fechas
+    public $helpers = array('Html', 'Form', 'Time', 'Js');
 
 /**
  * index method
@@ -49,7 +53,7 @@ class PlatillosController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Platillo->create();
 			if ($this->Platillo->save($this->request->data)) {
-				$this->Flash->success(__('The platillo has been saved.'));
+				$this->Flash->success('El camarero ha sido modificado');
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Flash->error(__('The platillo could not be saved. Please, try again.'));

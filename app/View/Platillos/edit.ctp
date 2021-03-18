@@ -10,8 +10,8 @@
 					echo $this->Form->input('nombre', array('class' => 'form-control', 'label' => 'Nombre'));
 					echo $this->Form->input('descripcion', array('class' => 'form-control', 'label' => 'Descripción'));
 					echo $this->Form->input('precio', array('class' => 'form-control', 'label' => 'Precio'));
-					echo $this->Form->input('foto', array('type' => 'file', 'label' => 'Foto', 'id' => 'foto',
-					'class' => 'file', 'data-show-upload' => 'false', 'data-show-caption' => 'true' ));
+					echo $this->Form->input('foto', array('type' => 'file', 'label' => 'Foto',  'id' => 'foto', 
+					'class' => 'file', 'data-show-upload' => 'false', 'data-show-caption' => 'true'));
 					echo $this->Form->input('foto_dir', array('type' => 'hidden'));
 					echo $this->Form->input('categoria_platillo_id', array('class' => 'form-control', 'label' => 'Categoría'));
 					echo $this->Form->input('Cocinero', array('class' => 'form-control', 'label' => 'Cocinero'));

@@ -1,52 +1,58 @@
-<div class="page-header">
-	<h2><?php echo __('Platillos'); ?> <h2>
-</div>
-<div class="col-md-12">
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th><?php echo $this->Paginator->sort('id'); ?></th>
-				<th><?php echo $this->Paginator->sort('nombre'); ?></th>
-				<th><?php echo $this->Paginator->sort('descripcion'); ?></th>
-				<th><?php echo $this->Paginator->sort('precio'); ?></th>
-				<th><?php echo $this->Paginator->sort('foto'); ?></th>
-				<th><?php echo $this->Paginator->sort('created'); ?></th>
-				<th><?php echo $this->Paginator->sort('modified'); ?></th>
-				<th><?php echo $this->Paginator->sort('categoria_platillo_id'); ?></th>
-				<th class="actions"><?php echo __('Actions');?>
-			</tr>
-		</thead>
-		<tbody>
-			<?php foreach ($platillos as $platillo): ?>
-				<tr>
-					<td><?php echo h($platillo['Platillo']['id']); ?>&nbsp;</td>
-					<td><?php echo h($platillo['Platillo']['nombre']); ?>&nbsp;</td>
-					<td><?php echo h($platillo['Platillo']['descripcion']); ?>&nbsp;</td>
-					<td><?php echo h($platillo['Platillo']['precio']); ?>&nbsp;</td>
-					<td><?php echo $this->Html->image('../files/platillo/foto/' .
-					$platillo['Platillo']['foto_dir'] . '/' . 'thumb_' .
-					$platillo['Platillo']['foto']); ?>&nbsp;</td>
-					<td><?php echo h($platillo['Platillo']['created']); ?>&nbsp;</td>
-					<td><?php echo h($platillo['Platillo']['modified']); ?>&nbsp;</td>
-					<td>
-						<?php echo $this->Html->link($platillo['CategoriaPlatillo']['categoria'], array('controller',
-							)) ?>
-					</td>
-					<td class="actions">
-					<?php echo $this->Html->link(__('View'), array('action' => 'view', $platillo['Platillo']['id']),
-							array('class' => 'btn btn-sm btn-info')); ?>
-					<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $platillo['Platillo']['id']),
-						array('class' => 'btn btn-sm btn-default')); ?>
-					<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $platillo['Platillo']['id']), 
-						array('class' => 'btn btn-sm btn-danger'),
-						__('Quieres eliminar a %s ?', $platillo['Platillo']['nombre'])); ?>
-						
-				</td>
-				</tr>
-			<?php endforeach ?>
-		</tbody>
-	</table>
-</div>
+<?php
+   $this->Paginator->options(array(
+      'update' => '#contenedor-platillos',
+      'before' => $this->Js->get("#procesando")->effect('fadeIn', array('buffer' => false)),
+      'complete' => $this->Js->get("#procesando")->effect('fadeOut', array('buffer' => false))
+   ));
+?>
 
+<div id="contenedor-platillos">
+
+	<div class="progress oculto" id="procesando">
+	  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+	    <span class="sr-only">100% Complete</span>
+	  </div>
+	</div>
+
+	<div class="page-header">
+		<h2><?php echo __('Platillos'); ?></h2>
+	</div>
+
+	<div class="row">
+		<!--Esto es una vista dinamica de fotos de su nombre,categoria,precio e imagen-->
+		<?php foreach ($platillos as $platillo): ?>
+		<div class="col col-sm-3">
+			<figure class="platillo">
+				<?php echo $this->Html->image('../files/platillo/foto/' . 
+				$platillo['Platillo']['foto_dir'] . '/' . 'thumb_' .
+				$platillo['Platillo']['foto'], array('url' => array('controller' => 'platillos', 
+				'action' => 'view', $platillo['Platillo']['id']))); ?>
+			</figure>
+			<br />
+			<?php echo $this->Html->link($platillo['Platillo']['nombre'], 
+			array('action' => 'view', $platillo['Platillo']['id'])); ?>
+			<br />
+			<span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>
+			<?php echo $this->Html->link($platillo['CategoriaPlatillo']['categoria'], 
+			array('controller' => 'categoria_platillos', 'action' => 'view', 
+			$platillo['CategoriaPlatillo']['id']), array('class' => 'food-category')); ?>
+			<br />
+			$ <?php echo h($platillo['Platillo']['precio']); ?>&nbsp;
+			<br />
+			<br />
+		</div>
+		<?php endforeach; ?>
+	</div>
+		<p>
+		<?php
+		echo $this->Paginator->counter(array(
+		'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
+		));
+		?>	</p>
+		<ul class="pagination">
+			<li> <?php echo $this->Paginator->prev('< ' . __('previous'), array('tag' => false), null, array('class' => 'prev disabled')); ?> </li>
+			<?php echo $this->Paginator->numbers(array('separator' => '', 'tag' => 'li', 'currentTag' => 'a', 'currentClass' => 'active')); ?>
+			<li> <?php echo $this->Paginator->next(__('next') . ' >', array('tag' => false), null, array('class' => 'next disabled')); ?> </li>
+		</ul>
 	<?php echo $this->Js->writeBuffer(); ?>
 </div> <!-- contenedor-platillos -->
