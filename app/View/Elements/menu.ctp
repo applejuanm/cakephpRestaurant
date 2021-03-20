@@ -49,11 +49,12 @@
 	                         <li><?php echo $this->Html->link('Nuevo Platillos', array('controller' => 'platillos',
                                 'action' => 'add'));?></li>
 								<li class="divider"></li>
+								<li class="dropdown-header" role="menu">Categorias </li>
 									<li><?php echo $this->Html->link('Lista Categorias', array('controller' => 'categoria_platillos',
                                 'action' => 'index'));?></li>
 	                         <li><?php echo $this->Html->link('Nueva Categoria', array('controller' => 'categoria_platillos',
                                 'action' => 'add'));?></li>
-	                    </ul>
+	                    </li>
 	                </li>
 
 	                <li class="dropdown">
@@ -67,11 +68,13 @@
 							
 	                    </ul>
 	                </li>
-
-
-					<li><a href="#about">About</a></li>
-	                <li><a href="#contact">Contact</a></li>
+					
 	            </ul>
+				<li style="position: right; top: 8px;">
+				 <div><?php echo $this->Html->link('Pedidos', array('controller' => 'pedidos', 'accion', 'view'),
+				 array('class' => 'btn btn-success navbar-sm-btn')); ?> </div>
+				 </li>
+				
 	        </div>
 	        <!--/.nav-collapse -->
 	    </div>

@@ -13,7 +13,27 @@ class CategoriaPlatillosController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator');
+	public $components = array('Session', 'RequestHandler');
+
+
+	public $paginate = array(
+        'CategoriaPlatillo' => array(
+        	'limit' => 5,
+        	'order' => array('CategoriaPlatillo.id' => 'asc')
+    	),
+        'Platillo' => array(
+        	'limit' => 3,
+        	'recursive' => 0,
+        	'order' => array('Platillo.id' => 'asc')
+        )
+    );
+
+    // public $paginate = array(
+    //     'limit' => 5,
+    //     'order' => array(
+    //         'CategoriaPlatillo.id' => 'asc'
+    //     )
+    // );
 
 /**
  * index method
@@ -22,7 +42,10 @@ class CategoriaPlatillosController extends AppController {
  */
 	public function index() {
 		$this->CategoriaPlatillo->recursive = 0;
-		$this->set('categoriaPlatillos', $this->Paginator->paginate());
+
+		$this->paginate['CategoriaPlatillo']['limit'] = 5;
+		$this->paginate['CategoriaPlatillo']['order'] = array('CategoriaPlatillo.id' => 'asc');
+		$this->set('categoriaPlatillos', $this->paginate('CategoriaPlatillo'));
 	}
 
 /**
@@ -37,7 +60,19 @@ class CategoriaPlatillosController extends AppController {
 			throw new NotFoundException(__('Invalid categoria platillo'));
 		}
 		$options = array('conditions' => array('CategoriaPlatillo.' . $this->CategoriaPlatillo->primaryKey => $id));
-		$this->set('categoriaPlatillo', $this->CategoriaPlatillo->find('first', $options));
+
+		$platilloList = $this->CategoriaPlatillo->find('first', $options);
+
+		$platilloId = $platilloList['CategoriaPlatillo']['id'];
+
+		$this->paginate['Platillo']['conditions'] = array('Platillo.categoria_platillo_id' => $platilloId);
+		$this->paginate['Platillo']['fields'] = array('Platillo.id', 'Platillo.nombre', 'Platillo.precio', 'Platillo.foto', 'Platillo.foto_dir', 'Platillo.categoria_platillo_id');
+
+		// Categoría Platillo
+		$platilloCat = $platilloList['CategoriaPlatillo']['categoria'];
+
+		$this->set('categoriaPlatillo', $this->paginate('Platillo'));
+		$this->set('nombreCategoria', $platilloCat);
 	}
 
 /**
@@ -49,10 +84,10 @@ class CategoriaPlatillosController extends AppController {
 		if ($this->request->is('post')) {
 			$this->CategoriaPlatillo->create();
 			if ($this->CategoriaPlatillo->save($this->request->data)) {
-				$this->Flash->success(__('The categoria platillo has been saved.'));
+				$this->Flash->success('The categoria platillo has been saved.', 'default', array('class' => 'alert alert-success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Flash->error(__('The categoria platillo could not be saved. Please, try again.'));
+				$this->Flash->error('The categoria platillo could not be saved. Please, try again.', 'default', array('class' => 'alert alert-danger'));
 			}
 		}
 	}
@@ -70,10 +105,10 @@ class CategoriaPlatillosController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->CategoriaPlatillo->save($this->request->data)) {
-				$this->Flash->success(__('The categoria platillo has been saved.'));
+				$this->Flash->success('The categoria platillo has been saved.', 'default', array('class' => 'alert alert-success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Flash->error(__('The categoria platillo could not be saved. Please, try again.'));
+				$this->Flash->error('The categoria platillo could not be saved. Please, try again.', 'default', array('class' => 'alert alert-danger'));
 			}
 		} else {
 			$options = array('conditions' => array('CategoriaPlatillo.' . $this->CategoriaPlatillo->primaryKey => $id));
@@ -95,9 +130,9 @@ class CategoriaPlatillosController extends AppController {
 		}
 		$this->request->allowMethod('post', 'delete');
 		if ($this->CategoriaPlatillo->delete()) {
-			$this->Flash->success(__('The categoria platillo has been deleted.'));
+			$this->Flash->success('The categoria platillo has been deleted.', 'default', array('class' => 'alert alert-success'));
 		} else {
-			$this->Flash->error(__('The categoria platillo could not be deleted. Please, try again.'));
+			$this->Flash->error('The categoria platillo could not be deleted. Please, try again.', 'default', array('class' => 'alert alert-danger'));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}

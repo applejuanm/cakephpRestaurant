@@ -23,8 +23,10 @@
 	<div class="row">
 		<?php foreach ($categoriaPlatillo as $platillo): ?>
 		<div class="col col-sm-3">
-		
-		
+			<figure class="platillo">
+				<?php echo $this->Html->image('../files/platillo/foto/' . $platillo['Platillo']['foto_dir'] . '/' . 'thumb_' .$platillo['Platillo']['foto'], array('url' => array('controller' => 'platillos', 'action' => 'view', $platillo['Platillo']['id']))); ?>
+			</figure>
+			<br />
 			<?php echo $this->Html->link($platillo['Platillo']['nombre'], array('action' => 'view', $platillo['Platillo']['id'])); ?>
 			<br />
 

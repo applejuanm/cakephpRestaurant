@@ -21,8 +21,8 @@ class CategoriaPlatillo extends AppModel {
  */
 	public $validate = array(
 		'categoria' => array(
-			'notBlank' => array(
-				'rule' => array('notBlank'),
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -32,7 +32,7 @@ class CategoriaPlatillo extends AppModel {
 		),
 	);
 
-	// The Associations below have been created with all possible keys, those that are not needed can be removed
+	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 /**
  * hasMany associations

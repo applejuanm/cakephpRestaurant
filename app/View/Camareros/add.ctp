@@ -1,19 +1,24 @@
-<div class="camareros form">
-<?php echo $this->Form->create('Camarero'); ?>
+<div class="camareros form formulario col-md-6">
+<?php
+
+echo $this->Html->css('estiloCamarero.css');
+
+use function PHPSTORM_META\type;
+
+echo $this->Form->create('Camarero'); ?>
 	<fieldset>
 		<legend><?php echo __('Nuevo Camarero'); ?></legend>
 		<?php
 				echo $this->Form->input('dni', array('class' => 'form-control', 'label' => 'DNI'));
 				echo $this->Form->input('nombre', array('class' => 'form-control', 'label' => 'Nombre'));
 				echo $this->Form->input('apellido', array('class' => 'form-control', 'label' => 'Apellido'));
-				echo $this->Form->input('telefono', array('class' => 'form-control', 'label' => 'Teléfono'));
+				echo $this->Form->input('telefono', array('class' => 'form-control telefono','type'=> 'number', 'label' => 'Teléfono'));
 		?>
 	</fieldset>
 	<p>
 			<?php echo $this->Form->end(array('label' => 'Crear Camarero', 'class' =>'btn btn-success')); ?>
 	</p>
-</div>
-<div class="btn-group">
+	<div class="btn-group">
 			  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 			    <?php echo __('Actions'); ?> <span class="caret"></span>
 			  </button>
@@ -26,4 +31,6 @@
 			</div>
 		</div>
 	</div>
+</div>
+
 </div>
