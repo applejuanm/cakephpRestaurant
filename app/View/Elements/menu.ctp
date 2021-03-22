@@ -71,7 +71,7 @@
 					
 	            </ul>
 				<li style="position: right; top: 8px;">
-				 <div><?php echo $this->Html->link('Pedidos', array('controller' => 'pedidos', 'accion', 'view'),
+				<div><?php echo $this->Html->link('Pedidos', array('controller' => 'pedidos', 'action' => 'view'),
 				 array('class' => 'btn btn-success navbar-sm-btn')); ?> </div>
 				 </li>
 				
