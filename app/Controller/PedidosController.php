@@ -60,7 +60,7 @@
 
 
             //aqui realizamos una consulta de todos los pedidos hechos
-            $this->set('pedidos', $this->Pedido->find('all', array('orden'=>'Pedido_id ASC')));
+            $this->set('pedidos', $this->Pedido->find('all', array('order' => 'Pedido.id ASC')));
 
             //generamos el total de nuestros pedidos, con sum voy cogiendo los pedidos metiendolo en 'subtotal'
             $total_pedidos = $this->Pedido->find('all', array('fields' => array('SUM(Pedido.subtotal) as subtotal')));
@@ -82,8 +82,14 @@
             //si existe nuestro campo cantidad? y si no existe pues es null
             $cantidad = isset($this->request->data['cantidad']) ? $this->request->data['cantidad'] : null;
 
-            if($cantidad == 0){
+            if($cantidad == 0)
+            {
                 $cantidad = 1;
+            }
+
+            if($cantidad < 0)
+            {
+                $cantidad = -1*$cantidad;
             }
             //mandamos el id con el item del pedido mediante un array
              $item = $this->Pedido->find('all', array('fields' => array('Pedido.id', 'Platillo.precio'),
@@ -120,9 +126,98 @@
             //asi no nos exiga una vista desde nuestra accion
             $this->autoRender = false;
         }
+        
 
-    
+        //funcion de borrar
+        public function remove()
+        {
+            //es ajax?
+            if($this->request->is('ajax'))
+            {
+                 //el id que le estoy mandando desde nuestro cart.js
+                $id = $this->request->data['id'];
+                $this->Pedido->delete($id);
+            }
+              //recorremos la parte subtotal del array meidante su id
+            $total_remove = $this->Pedido->find('all', array('fields' => array('SUM(Pedido.subtotal) as subtotal')));
+
+            //cogemos el subtotal
+            $mostrar_total_remove = $total_remove[0][0]['subtotal'];
+
+            //hacemos una consulta de todos los pedidos,
+            //
+            $pedidos = $this->Pedido->find('all');
+
+            //si el total es igual a 0, que lo deje en 0.00 porque si no se queda en Null
+            if(count($mostrar_total_remove) == 0){
+
+                $mostrar_total_remove = "0.00";
+            }
+            
+             //pasamos el subtotal a JSON para Ajax y mando la variable pedidos
+             //para procesarlo en el cart.js en el ajax
+            echo json_encode(compact('pedidos', 'mostrar_total_remove'));
+            $this->autoRender = false;
+        }
+
+        //funcion de quitar todos los pedidos
+
+        public function quitar(){
+            //usamos el metodo de cakephp borra todo, primer parametro true,
+            //2` parametro, depende otros modelos
+            if($this->Pedido->deleteAll(1, false)){
+                $this->Flash->success('Todos los pedidos han sido quitados');
+            }else{
+                $this->Flash->error('No se pudo quitar los pedidos');
+            }
+
+            return $this->redirect(array('controller' => 'Platillos', 'action' => 'index'));
+
+        }
+        public function recalcular()
+        {
+            // debug($_POST);
+            
+            $arreglo = $this->request->data['Pedido'];
+            
+            // debug($arreglo);
+            
+            if($this->request->is('post'))
+            {
+                foreach($arreglo as $key => $value)
+                {
+                    $entero = preg_replace("/[^0-9]/", "", $value);
+                    
+                    if($entero == 0 || $entero == "")
+                    {
+                        $entero = 1;
+                    }
+                    
+                    $precio_update = $this->Pedido->find('all', array('fields' => array('Pedido.id', 'Platillo.precio'), 'conditions' => array('Pedido.id' => $key)));
+                    
+                    $precio_update_mostrar = $precio_update[0]['Platillo']['precio'];
+                    
+                    $subtotal_update = $entero * $precio_update_mostrar;
+                    
+                    $pedido_update = array('id' => $key, 'cantidad' => $entero, 'subtotal' => $subtotal_update);
+                    $this->Pedido->saveAll($pedido_update);
+                }
+            }
+            
+            
+            
+            if($this->request->data['recalcular'] == 'recalcular')
+           
+            {
+                $this->Flash->success('Todos los pedidos fueron actualizados correctamente');
+                        
+                return $this->redirect(array('controller' => 'pedidos', 'action' => 'view'));            
+            }
+            elseif($this->request->data['procesar'] == 'procesar')
+            {
+                 return $this->redirect(array('controller' => 'ordens', 'action' => 'add'));  
+            }
+        }
+        
     }
-
-
-?>
+    ?>
