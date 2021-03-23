@@ -29,7 +29,6 @@
                 $this->set(compact('orden_item', 'mostrar_total_pedidos', 'mesas'));
 
 
-
             }else{  
                //si tenemos algun pedido
                 $this->Flash->set('Ninguna orden ha sido procesada');
