@@ -118,24 +118,38 @@ class Platillo extends AppModel {
  *
  * @var array
  */
-	public $belongsTo = array(
-		'CategoriaPlatillo' => array(
-			'className' => 'CategoriaPlatillo',
-			'foreignKey' => 'categoria_platillo_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
+	
+public $belongsTo = array(
+	'CategoriaPlatillo' => array(
+		'className' => 'CategoriaPlatillo',
+		'foreignKey' => 'categoria_platillo_id',
+		'conditions' => '',
+		'fields' => '',
+		'order' => ''
+	)
+);
 
+public $hasMany = array(
+	'Pedido' => array(
+		'className' => 'Pedido',
+		'foreignKey' => 'platillo_id',
+		'dependent' => false
+	),
+	'OrdenItem' => array(
+		'className' => 'OrdenItem',
+		'foreignKey' => 'platillo_id',
+		'dependent' => false,
+		'conditions' => '',
+		'fields' => '',
+		'order' => '',
+		'limit' => '',
+		'offset' => '',
+		'exclusive' => '',
+		'finderQuery' => '',
+		'counterQuery' => ''
+	)		
+);
 
-	public $hasMany = array(
-		'Pedido' => array(
-			'className' => 'Pedido',
-			'foreignKey' => 'platillo_id',
-			'dependent' => false
-		)
-	);
 
 /**
  * hasAndBelongsToMany associations

@@ -186,6 +186,7 @@
             {
                 foreach($arreglo as $key => $value)
                 {
+                    //que solo sea numerico entre 0 y 9
                     $entero = preg_replace("/[^0-9]/", "", $value);
                     
                     if($entero == 0 || $entero == "")
@@ -204,12 +205,10 @@
                 }
             }
             
-            
-            
+              
             if($this->request->data['recalcular'] == 'recalcular')
-           
             {
-                $this->Flash->success('Todos los pedidos fueron actualizados correctamente');
+                $this->Flash->success('Todos los pedidos fueron actualizados correctamente', 'default', array('class' => 'alert alert-success'));
                         
                 return $this->redirect(array('controller' => 'pedidos', 'action' => 'view'));            
             }

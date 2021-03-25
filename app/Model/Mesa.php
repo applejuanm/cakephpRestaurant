@@ -97,7 +97,7 @@ class Mesa extends AppModel {
  //relacion, 1 mesa esta relacionada a muchos ordenes, 
 
  public $hasMany = array(
-	'Platillo' => array(
+	'Orden' => array(
 		'className' => 'Orden',
 		'foreignKey' => 'mesa_id',
 		'dependent' => false,
@@ -109,6 +109,6 @@ class Mesa extends AppModel {
 		'exclusive' => '',
 		'finderQuery' => '',
 		'counterQuery' => ''
-			)
-		);
+	)
+);		
 }
