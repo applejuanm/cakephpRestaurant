@@ -120,4 +120,33 @@ class PlatillosController extends AppController {
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
+
+	public function searchjson(){
+		//creamos la variable term y la inicializamos en null
+		//para que no de problemas
+		$term = null;
+		//si cogemos la variable term de search.js
+		if(!empty($this->request->query['term'])){
+			$term = $this->request->query['term'];
+			//coge nuestro termino de busqueda 
+			//lo que va hacer es dividir cada uno de nuestro termino y lo divide
+			//en cadenas
+			$terms = explode(' ', trim($term));
+			//usamos el metodo array_diff para haciendo una comparacion con arrays
+			$terms = array_diff($terms, array(''));
+
+			foreach ($terms as $term) {
+				//aqui busca las palabras en base a sus 3 caracteres
+				$conditions[] = array('Platillo.nombre LIKE' => '%'. $term . '%');
+				//aqui nos hace un recorrido correcto 
+				$platillos = $this->Platillo->find('all', array('recursive' => -1, 'fields' => 
+					array('Platillo.id', 'Platillo.nombre' , 'Platillo.foto', 'Platillo.foto_dir'), 'conditions' => 
+					$conditions, 'limit' => 20));
+			}
+			echo json_encode($platillos);
+			$this->autoRender = false;
+
+		}
+
+	}
 }

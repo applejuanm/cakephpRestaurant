@@ -56,9 +56,7 @@
 				<?php 
 				    echo $this->Html->link('Ver pedidos', array('controller' => 'orden_items', 'action' => 'view', $orden['Orden']['id']), array('class' => 'btn btn-sm btn-info'));
 				?>
-					<?php
-					var_dump($orden['Orden']['id']);
-				?>
+			
 			</td>
 		</tr>
         <?php endforeach; ?>

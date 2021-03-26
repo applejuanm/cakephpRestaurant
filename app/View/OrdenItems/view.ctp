@@ -10,7 +10,7 @@
 
 <div class="page-header">
 
-	<h2>Pedidos de la mesa <?php echo $ordenitems[0]['Orden']['Mesa']['serie']; ?></h2>
+<h2>Pedidos de la mesa <?php echo $ordenitems[0]['Orden']['Mesa']['serie']; ?></h2>
 
 </div>
 
