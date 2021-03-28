@@ -35,7 +35,7 @@
 				<th><?php echo $this->Paginator->sort('Mesa'); ?></th>
 				<th><?php echo $this->Paginator->sort('Nombre Cliente'); ?></th>
 				<th><?php echo $this->Paginator->sort('DNI'); ?></th>
-				<th><?php echo $this->Paginator->sort('Total'); ?> $</th>
+				<th><?php echo $this->Paginator->sort('Total'); ?> €</th>
 				<th><?php echo $this->Paginator->sort('Creado'); ?></th>
 				<th><?php echo $this->Paginator->sort('Modificado'); ?></th>
 				<th class="actions"><?php echo __('Acciones'); ?></th>
@@ -56,9 +56,7 @@
 				<?php 
 				    echo $this->Html->link('Ver pedidos', array('controller' => 'orden_items', 'action' => 'view', $orden['Orden']['id']), array('class' => 'btn btn-sm btn-info'));
 				?>
-					<?php
-					var_dump($orden['Orden']['id']);
-				?>
+				
 			</td>
 		</tr>
         <?php endforeach; ?>

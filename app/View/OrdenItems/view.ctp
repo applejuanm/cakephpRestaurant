@@ -28,7 +28,7 @@
 		<tr>
 				<th><?php echo $this->Paginator->sort('Platillo'); ?></th>
 				<th><?php echo $this->Paginator->sort('Cantidad'); ?></th>
-				<th><?php echo $this->Paginator->sort('Subtotal'); ?> $</th>
+				<th><?php echo $this->Paginator->sort('Subtotal'); ?> €</th>
 		</tr>
 		</thead>
 		<tbody>
