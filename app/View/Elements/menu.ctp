@@ -50,7 +50,21 @@
 			<li><?php echo $this->Html->link('Lista de Ordenes', array('controller' => 'ordens', 'action' => 'index')); ?></li>
             
           </ul>
+
+          <?php echo $this->Form->create('Platillo', array('type' => 'GET', 'class' => 'navbar-form 
+            navbar-left', 'url' => array('controller' => 'platillos', 'action' => 'search'))); ?>
+          <div class="from-group">
+            <?php 
+              echo $this->Form->input('search', array('label' => false, 'div' => false, 'id' => 's',
+                'class' => 'form-control s', 'autocomplete' => 'off', 'placeholder' => 'buscar platillo...'));
+            ?>
           
+          <?php 
+              echo $this->Form->button('Buscar', array('div' => false, 'class' => 'btn btn-primary'));
+          ?>
+
+          <?php echo $this->Form->end() ?>
+          </div>
           <?php echo $this->Html->link('Pedidos', array('controller' => 'pedidos', 'action' => 'view'), array('class' => 'btn btn-success navbar-btn') ); ?>
             
         </div><!--/.nav-collapse -->
