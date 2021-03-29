@@ -152,6 +152,8 @@ class PlatillosController extends AppController {
 	public function search(){
 
 		$search = null;
-		
+		if(!empty($this->request->query['search'])){
+			
+		}
 	}
 }
