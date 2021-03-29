@@ -153,7 +153,44 @@ class PlatillosController extends AppController {
 
 		$search = null;
 		if(!empty($this->request->query['search'])){
+		
+			$search = $this->request->query['search'];			//comparo expresion regular con search
+			$search = preg_replace('/[^a-zA-ZñÑáéíóúÁÉÍÓÚ0-9 ]/', '', $search);
+
+			$terms = explode(' ', trim($search));
+			$terms = array_diff($terms, array(''));
+
+			foreach($terms as $term){				
+				$terms1[] = preg_replace('/[^a-zA-ZñÑáéíóúÁÉÍÓÚ0-9 ]/', '', $term);
+				$conditions[] = array('Platillo.nombre LIKE' => '%' . $term . '%');			
+			}
+			//resultado de busqueda
+			$platillos = $this->Platillo->find('all', array('recursive' => -1, 
+			'conditions' => $conditions, 'limit' => 200));
+			//si encuentras solo 1 registro de nuestra busqueda de platillos
+			if(count($platillos) == 1){
+				//si nos devuelve un solo resultado nos devuelve el id del platillo seleccionado
+				return $this->redirect(array('controller' => 'platillos', 'action' => 'view', 
+				$platillos[0]['Platillo']['id']));
+			}
 			
+				$terms1 = array_diff($terms1, array(''));
+				$this->set(compact('platillos', 'terms1'));
+			}
+				//en el caso que no exista un termino de busqueda
+				//mandamos en set el termino de busqueda definido arriba(funcion) que es set
+				$this->set(compact('search'));
+
+				//peticion Ajax que nos genera la vista de resultado de nuestro platillo
+				if($this->request->is('ajax')){
+					//bloqueamos nuestro layout
+					$this->layout = false;
+					//vamos a mandar con el metodo set la variable ajax con el valor de 1,
+					//en el caso que mandemos esto con una funcion ajax
+					$this->set('ajax', 1);
+				}else{
+					//en el caso que no fuese asi
+					$this->set('ajax', 0);
+				}
 		}
-	}
 }
