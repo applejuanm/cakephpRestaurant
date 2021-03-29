@@ -148,4 +148,10 @@ class PlatillosController extends AppController {
 		echo json_encode($platillos);
 		$this->autoRender = false;
 	}
+
+	public function search(){
+
+		$search = null;
+		
+	}
 }
