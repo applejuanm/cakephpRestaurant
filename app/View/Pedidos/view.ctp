@@ -73,7 +73,7 @@
 		<br><br><br><br>
 		<span class="total">Total Orden:</span>
 		<span id="total" class="total">
-			$ <?php echo $total_pedidos; ?>
+			€ <?php echo $total_pedidos; ?>
 		</span>
 
 		<br><br>
