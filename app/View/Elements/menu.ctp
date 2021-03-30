@@ -15,6 +15,14 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
 
+          <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><?php echo $this->Html->link('Lista Usuarios', array('controller' => 'users', 'action' => 'index')) ?></li>
+                <li><?php echo $this->Html->link('Nuevo Usuario', array('controller' => 'users', 'action' => 'add')) ?></li>
+              </ul>
+            </li>
+
 
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Camareros <span class="caret"></span></a>
@@ -67,6 +75,11 @@
           </div>
           <?php echo $this->Html->link('Pedidos', array('controller' => 'pedidos', 'action' => 'view'), array('class' => 'btn btn-success navbar-btn') ); ?>
             
+          <ul class="nav navbar-nav navbar-right">
+              <li>
+                <?php echo $this->Html->link('Salir', array('controller' => 'users', 'action' => 'logout')); ?>
+              </li>
+            </ul>  
         </div><!--/.nav-collapse -->
       </div>
     </div>

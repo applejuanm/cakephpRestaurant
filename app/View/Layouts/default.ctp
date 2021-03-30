@@ -44,13 +44,21 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 	</script>
 </head>
 <body>
-		
+	<!--Utilizamos un condicional si esta puesta la variable $current_user
+		entonces si existe este usuario autentificado nos muestra el menu
+		la variable $current_user tiene todos los datos del usuario(id,nombre,username,rol)-->
+		<?php if(isset($current_user)): ?>
 		<?php echo $this->element('menu'); ?>
+		<?php endif; ?>
+			
+		<?php //debug($current_user) ?>	
 
-		<div class="container theme-showcase" role="main">
+		<div class="container" role="main">
 		
 			<!--Este metodo nos enseña los camareros y las mesas-->
 			<?php echo $this->Flash->render(); ?>
+			<!----Componentes de autentificacion-->
+			<?php echo $this->Session->flash('auth'); ?>
 			<!--Este metodo nos enseña todo el contenido-->
 			<?php echo $this->fetch('content'); ?>
 

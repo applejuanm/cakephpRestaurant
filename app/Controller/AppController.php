@@ -31,4 +31,43 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+
+    //vamos a agregar funcionalidades a los controladores que heredamos de esta superclase
+
+    public $components = array(
+
+        'Session',
+        //Cuando te autentificas, entra dentro del index
+        'Auth' => array(
+            //a donde te va a redirigir una vez el usuario ha puesto sus credenciales
+            'loginRedirect' => array(
+                'controller' => 'platillos',
+                'action' => 'index'
+            ),
+            //cuando el usuario salga del sistema, es decir se deslogue 
+            'logoutRedirect' => array(
+                'controller' => 'users',
+                'action' => 'login'
+            ),
+            //que tipo de encriptacion estamos utilizando
+            'authenticate' => array(
+                //el formulario de login tiene el metodo de encriptacion 'Blowfish'
+                'Form' => array(
+                    'passwordHasher' => 'Blowfish'
+                )
+            ),
+            //los mensajes de error de autenticacion no se los muestre, cada vez que haga un error de acceso
+            'authError' => false
+        ),
+    );
+    //beforeFilter, esta funcion se encarga de filtrar antes de que el usuario ingrese sus 
+    //credenciales,(nombre, usuario y contrasenya)
+    public function beforeFilter(){
+        //acciones que puede acceder sin autentificacion
+        $this->Auth->allow('login', 'logout');
+        //esta variable lo que nos va a mandar es los datos de autentificacion del usuario actual
+        //es decir, nos va a mandar todos los datos, nombre rol fullname
+        $this->set('current_user', $this->Auth->user());
+    }
+
 }

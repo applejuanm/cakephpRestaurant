@@ -86,7 +86,7 @@ class PlatillosController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Platillo->save($this->request->data)) {
-				$this->Flash->success(__('The platillo has been saved.'));
+				$this->Flash->success(__('The platillo has been saved.', array('class' => 'alert alert-success')));
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Flash->error(__('The platillo could not be saved. Please, try again.'));
