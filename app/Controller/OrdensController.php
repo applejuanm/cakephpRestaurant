@@ -12,6 +12,29 @@ class OrdensController extends AppController{
             )
         );
 
+        public function isAuthorized($user){
+		
+            //si el usuario es user puede acceder al index y aniadir usuarios
+            if($user['role'] == 'user'){
+                //
+                if(in_array($this->action, array('add'))){
+    
+                    return true;
+    
+                }else{
+    
+                    if($this->Auth->user('id')){
+    
+                        $this->Flash->set('No puedes eliminar el platillo');
+                        //si no se puede acceder que nos redirija a la url de nuestra aplicacion
+                        $this->redirect($this->Auth->redirectUrl());
+                    }
+                }
+            }
+            //le damos los permisos al AppController
+            return parent::isAuthorized($user);
+        }
+
 
     public function index()
     {

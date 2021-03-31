@@ -27,9 +27,35 @@ class UsersController extends AppController {
 		//llamamos a nuestro beforeFilter de nuestro AppController
 		parent::beforeFilter();
 		//nos deja ir a la accion 'add', accede sin ningun problema, sea que este autentificado o no lo esté.
-		$this->Auth->allow('add');
-		
+	//	$this->Auth->allow('add');
+		//lo comento porque ya manejo cada controlador con 'isAuthorized'
 	}
+
+ /*
+	public function isAuthorized($user){
+		
+		//si el usuario es user puede acceder al index y aniadir usuarios
+		if($user['role'] == 'user'){
+			//
+			if(in_array($this->action, array('index','add'))){
+
+				return true;
+
+			}else{
+
+				if($this->Auth->user('id')){
+
+					$this->Flash->set('No puedes acceder');
+					//si no se puede acceder que nos redirija a la url de nuestra aplicacion
+					$this->redirect($this->Auth->redirectUrl());
+				}
+			}
+		}
+		//le damos los permisos al AppController
+		return parent::isAuthorized($user);
+	}
+
+	 */
 
 	//accion de logearse
 	public function login(){
@@ -69,7 +95,7 @@ class UsersController extends AppController {
 			throw new NotFoundException(__('Invalid user'));
 		}
 		$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
-		$this->set('user', $this->Mesa->find('first', $options));
+		$this->set('user', $this->User->find('first', $options));
 	}
 
 

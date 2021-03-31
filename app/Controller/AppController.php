@@ -56,6 +56,10 @@ class AppController extends Controller {
                     'passwordHasher' => 'Blowfish'
                 )
             ),
+            //la autorizacion de acceso la podemos hacer desde nuestro controlador, por ejemplo allow('add');
+            //vamos a autorizar desde cada uno de nuestros controladores las acciones correspondientes a cada
+            //usuario
+            'authorize' => array('controller'),
             //los mensajes de error de autenticacion no se los muestre, cada vez que haga un error de acceso
             'authError' => false
         ),
@@ -68,6 +72,23 @@ class AppController extends Controller {
         //esta variable lo que nos va a mandar es los datos de autentificacion del usuario actual
         //es decir, nos va a mandar todos los datos, nombre rol fullname
         $this->set('current_user', $this->Auth->user());
+    }
+
+    //aqui vamos a manejar las acciones correspondientes que van a ser controladas dentro de nuestra
+    //autentificacion de usuarios
+    public function isAuthorized($user){
+    
+        //ejemplo si el usuario es admin o rol hace diferentes acciones
+
+        //aqui le indicamos que a todas las acciones de todos nuestros controladores
+        //tienen acceso a todas las acciones de la web 
+        if(isset($user['role']) && $user['role'] == 'admin'){
+
+            return true;
+        }
+         
+            return false;
+        
     }
 
 }

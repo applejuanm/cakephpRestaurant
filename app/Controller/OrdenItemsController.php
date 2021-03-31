@@ -12,6 +12,7 @@ class OrdenItemsController extends AppController {
             )
         );
 
+        
     public function view($id = null)
     {
         //dos registros por pagina

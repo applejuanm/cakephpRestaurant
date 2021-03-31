@@ -15,6 +15,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
 
+         <?php if($current_user['role'] == 'admin'):  ?>
           <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -22,7 +23,7 @@
                 <li><?php echo $this->Html->link('Nuevo Usuario', array('controller' => 'users', 'action' => 'add')) ?></li>
               </ul>
             </li>
-
+          <?php endif; ?>
 
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Camareros <span class="caret"></span></a>
@@ -31,6 +32,16 @@
                 <li><?php echo $this->Html->link('Nuevo Camareros', array('controller' => 'camareros', 'action' => 'add')) ?></li>
               </ul>
             </li>
+            <!---Si eres admin puedes entrar en cocinero--->
+            <?php if($current_user['role'] == 'admin'): ?>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cocineros <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><?php echo $this->Html->link('Lista Cocineros', array('controller' => 'cocineros', 'action' => 'index')) ?></li>
+                <li><?php echo $this->Html->link('Nuevo Cocinero', array('controller' => 'cocineros', 'action' => 'add')) ?></li>
+              </ul>
+            </li>
+            <?php endif; ?>
 
 
             <li class="dropdown">
@@ -54,9 +65,9 @@
            
               </ul>
             </li>
-
+            <?php if($current_user['role'] == 'admin'): ?>
 			<li><?php echo $this->Html->link('Lista de Ordenes', array('controller' => 'ordens', 'action' => 'index')); ?></li>
-            
+      <?php endif; ?>
           </ul>
 
           <?php echo $this->Form->create('Platillo', array('type' => 'GET', 'class' => 'navbar-form 
